@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./index.css";
 
 const Button = ({ onClick, text }) => {
-  // console.log(onClick);
+  // console.log(text);
   return (
     <div>
       <button onClick={onClick}>{text}</button>
@@ -37,6 +37,7 @@ const Statistics = ({
   countAverage,
   positivePercentage,
 }) => {
+  console.log(clicks);
   return (
     <div>
       <h1>Statistics</h1>
