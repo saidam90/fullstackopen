@@ -37,18 +37,21 @@ const Statistics = ({
   countAverage,
   positivePercentage,
 }) => {
-  console.log(clicks);
   return (
     <div>
       <h1>Statistics</h1>
-      <div>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-        <p>all {clicks}</p>
-        <p>average {countAverage}</p>
-        <p>positive {positivePercentage} %</p>
-      </div>
+      {clicks === 0 ? (
+        "No feedback given"
+      ) : (
+        <div>
+          <p>good {good}</p>
+          <p>neutral {neutral}</p>
+          <p>bad {bad}</p>
+          <p>all {clicks}</p>
+          <p>average {countAverage}</p>
+          <p>positive {positivePercentage} %</p>
+        </div>
+      )}
     </div>
   );
 };
