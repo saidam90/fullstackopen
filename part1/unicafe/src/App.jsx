@@ -43,15 +43,55 @@ const Statistics = ({
       {clicks === 0 ? (
         "No feedback given"
       ) : (
-        <div>
-          <p>good {good}</p>
-          <p>neutral {neutral}</p>
-          <p>bad {bad}</p>
-          <p>all {clicks}</p>
-          <p>average {countAverage}</p>
-          <p>positive {positivePercentage} %</p>
-        </div>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <StatisticLine text="good" />
+              </td>
+              <td> {good}</td>
+            </tr>
+            <tr>
+              <td>
+                <StatisticLine text="neutral" />
+              </td>
+              <td>{neutral} </td>
+            </tr>
+            <tr>
+              <td>
+                <StatisticLine text="bad" />
+              </td>
+              <td>{bad}</td>
+            </tr>
+            <tr>
+              <td>
+                <StatisticLine text="all" />
+              </td>
+              <td>{clicks}</td>
+            </tr>
+            <tr>
+              <td>
+                <StatisticLine text="average" />
+              </td>
+              <td>{countAverage()}</td>
+            </tr>
+            <tr>
+              <td>
+                <StatisticLine text="positive" />
+              </td>
+              <td>{positivePercentage()} %</td>
+            </tr>
+          </tbody>
+        </table>
       )}
+    </div>
+  );
+};
+
+const StatisticLine = ({ text, value }) => {
+  return (
+    <div>
+      {text} {value}
     </div>
   );
 };
@@ -98,8 +138,8 @@ const App = () => {
         neutral={neutral}
         bad={bad}
         clicks={clicks}
-        countAverage={countAverage()}
-        positivePercentage={positivePercentage()}
+        countAverage={countAverage}
+        positivePercentage={positivePercentage}
       />
     </div>
   );
