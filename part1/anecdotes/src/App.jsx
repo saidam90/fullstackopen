@@ -23,6 +23,7 @@ const App = () => {
   return (
     <div>
       {anecdotes[selected]}
+      <br />
       <button onClick={generateAnecdote}>next anecdote</button>
     </div>
   );
