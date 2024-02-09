@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+const Button = ({ onClick, text }) => {
+  return <button onClick={onClick}>{text}</button>;
+};
+
 const App = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -13,18 +17,28 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
 
   const generateAnecdote = () => {
-    const collection = anecdotes.length;
-    setSelected(Math.floor(Math.random() * collection));
-    // console.log(selected);
+    const index = Math.floor(Math.random() * anecdotes.length);
+    setSelected(index);
+    // console.log(index);
+  };
+
+  const vote = () => {
+    const newVotes = [...votes];
+    newVotes[selected] += 1;
+    setVotes(newVotes);
   };
 
   return (
     <div>
       {anecdotes[selected]}
       <br />
-      <button onClick={generateAnecdote}>next anecdote</button>
+      has {votes[selected]} votes
+      <br />
+      <Button text={"vote"} onClick={vote} />
+      <Button text={"next button"} onClick={generateAnecdote} />
     </div>
   );
 };
