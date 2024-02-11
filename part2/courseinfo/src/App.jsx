@@ -23,10 +23,17 @@ const App = () => {
     ],
   };
 
-  const total = course.parts.reduce(
-    (sum, parts) => (sum += parts.exercises),
-    0
-  );
+  // const total = course.parts.reduce(
+  //   (sum, parts) => (sum += parts.exercises),
+  //   0
+  // );
+
+  const total = course.parts.reduce((sum, parts) => {
+    console.log("what is happening", sum, parts);
+    return sum + parts.exercises;
+  }, 0);
+
+  console.log("Final total:", total);
 
   return (
     <>
