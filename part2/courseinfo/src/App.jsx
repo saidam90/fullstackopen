@@ -23,10 +23,18 @@ const App = () => {
     ],
   };
 
+  const total = course.parts.reduce(
+    (sum, parts) => (sum += parts.exercises),
+    0
+  );
+
   return (
     <>
       <h1>Half-Stack application development</h1>
       <Course course={course} />
+      <p>
+        <strong>total of {total} exercises</strong>
+      </p>
     </>
   );
 };
