@@ -1,12 +1,22 @@
-const Course = ({ course }) => {
+import Total from "./Total";
+
+const Course = ({ courses }) => {
   return (
-    <ul>
-      {course.parts.map((part) => (
-        <li key={part.id}>
-          {part.name} {part.exercises}
-        </li>
+    <div>
+      {courses.map((course) => (
+        <div key={course.id}>
+          <h2>{course.name}</h2>
+          <ul>
+            {course.parts.map((part) => (
+              <li key={part.id}>
+                {part.name} {part.exercises}
+              </li>
+            ))}
+          </ul>
+          <Total parts={course.parts} />
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 
