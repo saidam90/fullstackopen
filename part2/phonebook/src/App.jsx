@@ -17,7 +17,7 @@ const App = () => {
 
   useEffect(() => {
     console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
+    axios.get("http://localhost:3002/persons").then((response) => {
       console.log("promise fulfilled");
       setPersons(response.data);
     });
@@ -54,6 +54,12 @@ const App = () => {
     } else {
       setPersons([...persons, personsObject]);
     }
+
+    axios //break
+      .post("http://localhost:3002/persons", personsObject)
+      .then((response) => {
+        console.log(response);
+      });
   };
 
   return (
