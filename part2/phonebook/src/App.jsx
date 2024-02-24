@@ -2,21 +2,13 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
-import axios from "axios";
+import personService from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [number, setNumber] = useState("");
   const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    console.log("effect");
-    axios.get("http://localhost:3002/persons").then((response) => {
-      console.log("promise fulfilled");
-      setPersons(response.data);
-    });
-  }, []);
 
   const handleNameChange = (event) => {
     // console.log(event.target.value);
@@ -37,6 +29,15 @@ const App = () => {
     setSearch(event.target.value);
   };
 
+  useEffect(() => {
+    // console.log("effect");
+    personService //break
+      .getAll()
+      .then((initialNotes) => {
+        setPersons(initialNotes);
+      });
+  }, []);
+
   const addName = (event) => {
     event.preventDefault();
     const personsObject = {
@@ -50,10 +51,11 @@ const App = () => {
       setPersons([...persons, personsObject]);
     }
 
-    axios //break
-      .post("http://localhost:3002/persons", personsObject)
-      .then((response) => {
-        console.log(response);
+    personService //break
+      .create(personsObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
       });
   };
 
