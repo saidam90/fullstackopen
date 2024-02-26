@@ -33,8 +33,8 @@ const App = () => {
     // console.log("effect");
     personService //break
       .getAll()
-      .then((initialNotes) => {
-        setPersons(initialNotes);
+      .then((initialPersons) => {
+        setPersons(initialPersons);
       });
   }, []);
 
@@ -59,6 +59,19 @@ const App = () => {
       });
   };
 
+  const deletePerson = (id) => {
+    const personToDelete = persons.find((person) => {
+      console.log(person.id);
+      console.log(id);
+      return person.id === id;
+    });
+    if (window.confirm(`Delete ${personToDelete.name}?`)) {
+      personService
+        .deleteName(id)
+        .then(() => setPersons(persons.filter((person) => person.id !== id)));
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -72,7 +85,11 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={persons} checkOverlap={checkOverlap} />
+      <Persons
+        persons={persons}
+        checkOverlap={checkOverlap}
+        deletePerson={deletePerson}
+      />
     </div>
   );
 };
