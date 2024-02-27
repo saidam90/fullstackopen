@@ -21,8 +21,11 @@ const App = () => {
   };
 
   const checkOverlap = (person) => {
-    const filtered = person.name.toLowerCase().includes(search.toLowerCase());
-    return filtered;
+    if (person && person.name) {
+      const filtered = person.name.toLowerCase().includes(search.toLowerCase());
+      return filtered;
+    }
+    return false;
   };
 
   const handleSearch = (event) => {
@@ -45,24 +48,39 @@ const App = () => {
       number: number,
     };
 
-    if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-    } else {
-      setPersons([...persons, personsObject]);
-    }
+    const existingPerson = persons.find((person) => person.name === newName);
 
-    personService //break
-      .create(personsObject)
-      .then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-        setNewName("");
-      });
+    if (existingPerson) {
+      if (
+        window.confirm(
+          `${existingPerson.name} is already added to phonebook. Replace the old number with the new one?`
+        )
+      ) {
+        personService.update(existingPerson.id, { number }).then(() => {
+          setPersons((prevPersons) =>
+            prevPersons.map((person) =>
+              person.id !== existingPerson.id ? person : { ...person, number }
+            )
+          );
+          setNewName("");
+          setNumber("");
+        });
+      }
+    } else {
+      personService //break
+        .create(personsObject)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+          setNewName("");
+          setNumber("");
+        });
+    }
   };
 
   const deletePerson = (id) => {
     const personToDelete = persons.find((person) => {
-      console.log(person.id);
-      console.log(id);
+      // console.log(person.id);
+      // console.log(id);
       return person.id === id;
     });
     if (window.confirm(`Delete ${personToDelete.name}?`)) {
