@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
+import Notification from "./components/Notification";
 import personService from "./services/persons";
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [number, setNumber] = useState("");
   const [search, setSearch] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleNameChange = (event) => {
     // console.log(event.target.value);
@@ -64,6 +66,7 @@ const App = () => {
           );
           setNewName("");
           setNumber("");
+          setErrorMessage(`${existingPerson.name}'s number is updated`);
         });
       }
     } else {
@@ -73,6 +76,7 @@ const App = () => {
           setPersons(persons.concat(returnedPerson));
           setNewName("");
           setNumber("");
+          setErrorMessage(`'${personsObject.name}' was added`);
         });
     }
   };
@@ -87,12 +91,14 @@ const App = () => {
       personService
         .deleteName(id)
         .then(() => setPersons(persons.filter((person) => person.id !== id)));
+      setErrorMessage(`'${personToDelete.name}' was deleted`);
     }
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Filter search={search} handleSearch={handleSearch} />
       <h3>Add a new</h3>
       <PersonForm
