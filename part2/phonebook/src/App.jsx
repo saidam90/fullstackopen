@@ -27,7 +27,7 @@ const App = () => {
       const filtered = person.name.toLowerCase().includes(search.toLowerCase());
       return filtered;
     }
-    return false;
+    return true;
   };
 
   const handleSearch = (event) => {
@@ -58,16 +58,23 @@ const App = () => {
           `${existingPerson.name} is already added to phonebook. Replace the old number with the new one?`
         )
       ) {
-        personService.update(existingPerson.id, { number }).then(() => {
-          setPersons((prevPersons) =>
-            prevPersons.map((person) =>
-              person.id !== existingPerson.id ? person : { ...person, number }
-            )
-          );
-          setNewName("");
-          setNumber("");
-          setErrorMessage(`${existingPerson.name}'s number is updated`);
-        });
+        personService
+          .update(existingPerson.id, { number })
+          .then(() => {
+            setPersons((prevPersons) =>
+              prevPersons.map((person) =>
+                person.id !== existingPerson.id ? person : { ...person, number }
+              )
+            );
+            setNewName("");
+            setNumber("");
+            setErrorMessage(`${existingPerson.name}'s number is updated`);
+          })
+          .catch((error) => {
+            setErrorMessage(
+              `Information of ${existingPerson.name} has already been removed from the server`
+            );
+          });
       }
     } else {
       personService //break
