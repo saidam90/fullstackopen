@@ -10,7 +10,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log("effect run", name);
+    console.log("effect run");
 
     const fetchCountries = () => {
       axios
@@ -44,13 +44,13 @@ const App = () => {
               <p>capital {country.capital}</p>
               <p>area {country.area}</p>
               <h4>languages:</h4>
-              <p>
+              <div>
                 {Object.values(country.languages).map((language) => (
                   <ul key={language}>
                     <li>{language}</li>
                   </ul>
                 ))}
-              </p>
+              </div>
               <img src={country.flags.png} alt="" />
             </div>
           ))
