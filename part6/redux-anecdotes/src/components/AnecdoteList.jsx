@@ -2,14 +2,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { vote } from "../reducers/anecdoteReducer";
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector((state) => state);
+  const anecdotes = useSelector((state) => {
+    if (state.filter === "ALL") {
+      return state.anecdotes;
+    }
+    return state.filter === "IMPORTANT"
+      ? state.anecdotes.filter((anecdote) => anecdote.important)
+      : state.anecdotes.filter((anecdote) => !anecdote.important);
+  });
+
   const dispatch = useDispatch();
+
   const handleVote = (id) => {
     dispatch(vote(id));
   };
 
   const orderedList = anecdotes.sort((a, b) => b.votes - a.votes);
-  // console.log(orderedList);
 
   return (
     <div>
